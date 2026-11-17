@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123c32">
+<title>CreativeCanvas | Online Store</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#20332d;background:#f7f9f7}
+header{background:#123c32;color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:bold}
+header a{color:white;text-decoration:none;margin-left:14px}
+.hero{padding:65px 7%;background:linear-gradient(120deg,#dcefe5,#f6f8ef)}
+.hero h1{font-size:38px;margin:0 0 14px}
+.hero p{font-size:17px;line-height:1.6}
+.btn{display:inline-block;background:#16734e;color:white;padding:12px 20px;border:0;border-radius:7px;text-decoration:none;cursor:pointer;font-weight:bold}
+section{padding:35px 5%}
+h2{color:#123c32}
+.search{width:100%;padding:13px;border:1px solid #ccc;border-radius:7px;margin:10px 0 18px}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:20px}
+.filters button{padding:10px 13px;border:1px solid #16734e;border-radius:20px;background:white;color:#16734e;cursor:pointer}
+.filters button.active{background:#16734e;color:white}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.product{background:white;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px #00000012}
+.product img{width:100%;height:175px;object-fit:cover;background:#e8eee9}
+.info{padding:15px}
+.info h3{margin:5px 0}
+.price{color:#16734e;font-size:19px;font-weight:bold}
+.small{color:#68766f;font-size:13px}
+.info button{width:100%;margin-top:10px}
+.info button:disabled{background:#999;cursor:not-allowed}
+.info button:disabled::after{content:" — Unavailable"}
+.info button:disabled{font-size:0}
+.info button:disabled::after{font-size:14px}
+.panel{background:white;border-radius:12px;padding:22px;margin:15px 0}
+input,textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #ccc;border-radius:6px;font:inherit}
+footer{background:#123c32;color:white;padding:30px 6%;line-height:1.8}
+footer a{color:white}
+@media(max-width:600px){.hero h1{font-size:29px}header{justify-content:center;text-align:center}.hero{padding:45px 6%}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">CreativeCanvas</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="hero" id="home">
+  <h1>Welcome to CreativeCanvas</h1>
+  <p>Discover quality products at affordable prices.<br>
+  Shop electronics, mobile accessories, cosmetics and more.</p>
+  <a class="btn" href="#shop">Explore Products</a>
+</div>
+
+<section id="shop">
+  <h2>Our Products</h2>
+  <input class="search" id="search" placeholder="Search products..." oninput="renderProducts()">
+  <div class="filters" id="filters"></div>
+  <div class="products" id="products"></div>
+</section>
+
+<section id="about">
+  <div class="panel">
+    <h2>About CreativeCanvas</h2>
+    <p>CreativeCanvas is an online shopping store offering a range of everyday products. Our goal is to make shopping simple and convenient.</p>
+    <p><b>Payment:</b> Cash on Delivery (COD)</p>
+    <p><b>Currency:</b> Saudi Riyal (SAR)</p>
+  </div>
+  <div class="panel">
+    <h2>Delivery & Returns</h2>
+    <p>Delivery availability, charges and estimated delivery time will be confirmed before your order is accepted.</p>
+    <p>Please contact us to ask about returns, exchanges and product availability before ordering.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="panel">
+    <h2>Contact & Order Support</h2>
+    <p>WhatsApp: +966 57 163 0488</p>
+    <p>Email: tanvirajum421@gmail.com</p>
+    <a class="btn" href="https://wa.me/966571630488">Chat on WhatsApp</a>
+  </div>
+  <div class="panel">
+    <h2>Place Your Order</h2>
+    <p>Select products above, then complete your details below.</p>
+    <form id="orderForm">
+      <input id="customer" placeholder="Full Name" required>
+      <input id="phone" type="tel" placeholder="Phone Number" required>
+      <textarea id="address" placeholder="Delivery Address" required></textarea>
+      <textarea id="notes" placeholder="Additional Notes (Optional)"></textarea>
+      <button class="btn" type="submit">Order via WhatsApp</button>
+    </form>
+    <p class="small">Payment method: Cash on Delivery only. Your order is subject to seller confirmation.</p>
+  </div>
+</section>
+
+<footer>
+  <h2 style="color:white">CreativeCanvas</h2>
+  <p>Shopping made simple.</p>
+  <p>WhatsApp: +966 57 163 0488</p>
+  <p>Email: tanvirajum421@gmail.com</p>
+  <p>© 2026 CreativeCanvas. All rights reserved.</p>
+</footer>
+
+<script>
+const productsData = [
+ {name:"Wireless Earbuds",cat:"Electronics",price:79,img:"https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=500"},
+ {name:"Power Bank",cat:"Electronics",price:89,img:"https://images.unsplash.com/photo-1609592806596-b43bada2f2b1?w=500"},
+ {name:"Smart LED Lamp",cat:"Electronics",price:55,img:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500"},
+ {name:"USB-C Fast Charger",cat:"Mobile Phones & Accessories",price:49,img:"https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500"},
+ {name:"Phone Protective Case",cat:"Mobile Phones & Accessories",price:25,img:"https://images.unsplash.com/photo-1601593346740-925612772716?w=500"},
+ {name:"Screen Protector",cat:"Mobile Phones & Accessories",price:19,img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500"},
+ {name:"Face Care Cream",cat:"Cosmetics",price:29,img:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=500"},
+ {name:"Beauty Care Set",cat:"Cosmetics",price:39,img:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500"},
+ {name:"Personal Care Kit",cat:"Medical Products",price:22,img:"https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=500"},
+ {name:"First Aid Kit",cat:"Medical Products",price:45,img:"https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=500"},
+ {name:"Travel Bottle Set",cat:"Other Products",price:28,img:"https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500"},
+ {name:"Daily Essentials",cat:"Other Products",price:34,img:"https://images.unsplash.com/photo-1544816155-12df9643f363?w=500"}
+];
+
+let category="All Products";
+let cart=[];
+
+const categories=["All Products","Electronics","Mobile Phones & Accessories","Cosmetics","Medical Products","Other Products"];
+
+function renderFilters(){
+ document.getElementById("filters").innerHTML=categories.map(c=>
+ `<button class="${category===c?'active':''}" onclick="setCategory('${c}')">${c}</button>`
+ ).join("");
+}
+
+function setCategory(c){
+ category=c;
+ renderFilters();
+ renderProducts();
+}
+
+function renderProducts(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=productsData.filter(p=>
+ (category==="All Products"||p.cat===category)&&p.name.toLowerCase().includes(q)
+ );
+ document.getElementById("products").innerHTML=list.map(p=>{
+ const index=productsData.indexOf(p);
+ return `<div class="product">
+ <img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'">
+ <div class="info">
+ <h3>${p.name}</h3>
+ <p class="small">${p.cat}</p>
+ <p class="price">SAR ${p.price}</p>
+ <button class="btn" onclick="addToCart(${index})">Add to Order</button>
+ </div></div>`;
+ }).join("")||"<p>No products found.</p>";
+}
+
+function addToCart(i){
+ cart.push(productsData[i]);
+ alert(productsData[i].name+" added to your order.");
+}
+
+document.getElementById("orderForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ if(cart.length===0){
+  alert("Please add at least one product first.");
+  return;
+ }
+ const total=cart.reduce((sum,p)=>sum+p.price,0);
+ const items=cart.map(p=>"- "+p.name+" (SAR "+p.price+")").join("\n");
+ const message=
+ "Hello CreativeCanvas! I want to place an order.\n\n"+
+ "Name: "+document.getElementById("customer").value+"\n"+
+ "Phone: "+document.getElementById("phone").value+"\n"+
+ "Address: "+document.getElementById("address").value+"\n"+
+ "Products:\n"+items+"\n\n"+
+ "Total: SAR "+total+"\n"+
+ "Payment: Cash on Delivery\n"+
+ "Notes: "+document.getElementById("notes").value;
+ window.open("https://wa.me/966571630488?text="+encodeURIComponent(message),"_blank");
+});
+
+renderFilters();
+renderProducts();
+</script>
+</body>
+</html>
