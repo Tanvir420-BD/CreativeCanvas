@@ -163,9 +163,32 @@ function renderProducts(){
 }
 
 function addToCart(i){
- cart.push(productsData[i]);
+ cart.push(productsData[i]); renderCart();
+  
  alert(productsData[i].name+" added to your order.");
 }
+  function removeFromCart(n){
+ cart.splice(n,1);
+ renderCart();
+}
+
+function renderCart(){
+ let box=document.getElementById("cartBox");
+ if(!box){
+  box=document.createElement("div");
+  box.id="cartBox";
+  box.className="panel";
+  const f=document.getElementById("orderForm");
+  f.parentNode.insertBefore(box,f);
+ }
+ if(cart.length===0){
+  box.innerHTML="<h2>Your Order</h2><p>No products added yet.</p>";
+  return;
+ }
+ const total=cart.reduce((s,p)=>s+p.price,0);
+ box.innerHTML="<h2>Your Order</h2>"+cart.map((p,n)=>"<p>"+p.name+" - SAR "+p.price+" <button type='button' onclick='removeFromCart("+n+")'>Remove</button></p>").join("")+"<p><b>Total: SAR "+total+"</b></p>";
+   }
+  
 
 document.getElementById("orderForm").addEventListener("submit",function(e){
  e.preventDefault();
@@ -187,8 +210,9 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
  window.open("https://wa.me/966571630488?text="+encodeURIComponent(message),"_blank");
 });
 
-renderFilters();
+renderFilters();renderCart();
 renderProducts();
-</script>
+</script><a href="https://wa.me/966571630488?text=Hello%20CreativeCanvas%2C%20I%20want%20to%20order" target="_blank" rel="noopener" style="position:fixed;bottom:18px;right:18px;background:#25D366;color:#fff;padding:13px 18px;border-radius:30px;font-weight:bold;text-decoration:none;box-shadow:0 3px 10px #0004;z-index:999">WhatsApp Order</a>
+  
 </body>
 </html>
